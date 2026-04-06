@@ -45,24 +45,32 @@ function FileCard({ file, onUpdate }) {
   };
 
   return (
-    <div className="file-card card">
+    <div className="file-card card" onClick={handleDownload} title="Click to view file">
       <div className="file-card-preview bg-gray-50 flex items-center justify-center">
         {getIcon()}
       </div>
       
       <div className="file-card-info">
         <h4 className="file-name truncate" title={file.fileName}>{file.fileName}</h4>
-        <div className="file-meta flex justify-between items-center text-muted">
+        
+        {file.description && (
+          <p className="file-description truncate-2-lines" title={file.description}>
+            {file.description}
+          </p>
+        )}
+
+        <div className="file-meta flex justify-between items-center text-muted mt-auto" style={{ marginTop: 'auto' }}>
           <span className="truncate" style={{maxWidth: '80px'}} title={file.category}>{file.category}</span>
           <span>{new Date(file.uploadDate).toLocaleDateString()}</span>
         </div>
       </div>
 
-      <div className="file-card-actions">
+      <div className="file-card-actions" onClick={(e) => e.stopPropagation()}>
         <button 
           className="btn-icon-only relative"
           onClick={() => setShowMenu(!showMenu)}
           onBlur={() => setTimeout(() => setShowMenu(false), 200)}
+          title="More options"
         >
           <MoreVertical size={16} />
         </button>
