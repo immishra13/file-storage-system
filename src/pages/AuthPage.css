@@ -1,0 +1,95 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 24px;
+}
+
+.back-link {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.back-link:hover {
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.auth-header .subtitle {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 32px;
+}
+
+/* Floating Label CSS */
+.floating-input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.floating-input {
+  width: 100%;
+  padding: 16px 16px 12px;
+  font-size: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  background-color: transparent;
+  transition: all var(--transition-fast);
+}
+
+.floating-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.floating-label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 15px;
+  pointer-events: none;
+  transition: all var(--transition-fast);
+}
+
+/* Float the label when input is focused or not empty (requires placeholder=" " trick) */
+.floating-input:focus ~ .floating-label,
+.floating-input:not(:placeholder-shown) ~ .floating-label {
+  top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary-color);
+  background: var(--card-bg);
+  padding: 0 4px;
+  transform: translateY(-50%);
+}
+
+.floating-input:not(:placeholder-shown):not(:focus) ~ .floating-label {
+  color: var(--text-muted);
+}
+
+.w-full {
+  width: 100%;
+}
