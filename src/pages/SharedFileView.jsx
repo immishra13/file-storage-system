@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { Cloud, ExternalLink, File as FileIcon, Image as ImageIcon, FileText, Video, Music, Archive, Loader2, Code } from 'lucide-react';
+import { Cloud, ExternalLink, File as FileIcon, Image as ImageIcon, FileText, Video, Music, Archive, Loader2, Code, ArrowRight } from 'lucide-react';
 import './SharedFileView.css';
 
 function SharedFileView() {
@@ -35,12 +35,12 @@ function SharedFileView() {
 
   const getIcon = () => {
     switch (file.category) {
-      case 'Image': return <ImageIcon size={48} color="#0066cc" />;
-      case 'Document': return <FileText size={48} color="#ff3b30" />;
-      case 'Video': return <Video size={48} color="#9c27b0" />;
-      case 'Audio': return <Music size={48} color="#ff9800" />;
-      case 'Archive': return <Archive size={48} color="#795548" />;
-      default: return <FileIcon size={48} color="#86868b" />;
+      case 'Image': return <ImageIcon size={42} color="#0066cc" />;
+      case 'Document': return <FileText size={42} color="#ff3b30" />;
+      case 'Video': return <Video size={42} color="#9c27b0" />;
+      case 'Audio': return <Music size={42} color="#ff9800" />;
+      case 'Archive': return <Archive size={42} color="#795548" />;
+      default: return <FileIcon size={42} color="#86868b" />;
     }
   };
 
@@ -73,62 +73,67 @@ function SharedFileView() {
         </Link>
       </nav>
 
-      <main className="shared-main container flex justify-center items-center mt-12 pb-12">
-        <div className="card shared-card" style={{ maxWidth: '600px', width: '100%', padding: '0' }}>
+      <main className="shared-main container flex justify-center items-start mt-12 pb-20">
+        <div className="shared-premium-card card animate-slide-up">
           
-          <div className="p-8 flex items-center gap-4 bg-gray-50 border-b border-gray-100 rounded-t-xl">
-            {getIcon()}
-            <div>
-              <h1 className="text-2xl font-bold text-main" style={{ wordBreak: 'break-word', lineHeight: 1.2 }}>
-                {file.fileName}
-              </h1>
-              <p className="text-muted text-sm mt-1">
-                Category: {file.category} • Added: {new Date(file.uploadDate).toLocaleDateString()}
-              </p>
-            </div>
-          </div>
-          
-          <div className="p-8">
-            {file.description ? (
-              <div 
-                className="description-box mb-8 text-main"
-                style={{
-                  whiteSpace: 'pre-wrap', 
-                  lineHeight: '1.6', 
-                  fontSize: '15px',
-                  backgroundColor: '#f9fafb',
-                  padding: '20px',
-                  borderRadius: '12px',
-                  border: '1px solid #f3f4f6'
-                }}
-              >
-                {file.description}
+          {/* Header Area with Floating Alignments */}
+          <div className="premium-header flex justify-between items-start flex-wrap gap-6">
+            <div className="flex items-center gap-5">
+              <div className="premium-icon-box">
+                {getIcon()}
               </div>
-            ) : (
-              <p className="italic text-gray-400 mb-8 text-center">No description provided for this link.</p>
-            )}
-            
-            <div className="flex flex-col gap-3">
-              <a 
-                href={file.fileURL} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="btn btn-primary w-full justify-center btn-large"
-              >
-                <ExternalLink size={20} /> Open External Link
-              </a>
-              
+              <div className="premium-title-box">
+                <h1 className="text-3xl font-bold text-main leading-tight mb-2">
+                  {file.fileName}
+                </h1>
+                <div className="premium-meta flex items-center gap-3 text-sm text-muted">
+                  <span className="tag-badge bg-gray-100 px-3 py-1 rounded-full text-gray-700 font-medium">
+                    {file.category}
+                  </span>
+                  <span>•</span>
+                  <span>Added {new Date(file.uploadDate).toLocaleDateString()}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Action Buttons */}
+            <div className="premium-actions flex gap-3">
               {file.githubLink && (
                 <a 
                   href={file.githubLink} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="btn btn-outline w-full justify-center btn-large flex items-center gap-2"
+                  className="btn btn-outline flex items-center gap-2"
                 >
-                  <Code size={20} /> View on GitHub
+                  <Code size={18} /> View on GitHub
                 </a>
               )}
+              <a 
+                href={file.fileURL} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn btn-primary flex items-center gap-2 shadow-sm"
+              >
+                See Working Project <ArrowRight size={18} />
+              </a>
             </div>
+          </div>
+          
+          {/* Divider */}
+          <div className="premium-divider my-8"></div>
+          
+          {/* Content Area */}
+          <div className="premium-body">
+            <h3 className="text-lg font-bold text-main mb-4">Description & Context</h3>
+            {file.description ? (
+              <div className="premium-description-box">
+                {file.description}
+              </div>
+            ) : (
+              <div className="premium-empty text-muted italic p-10 text-center bg-gray-50 rounded-xl border border-gray-100">
+                No description was provided for this project.
+              </div>
+            )}
           </div>
           
         </div>

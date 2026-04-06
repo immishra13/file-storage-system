@@ -1,50 +1,67 @@
 .shared-layout {
   min-height: 100vh;
-  background-color: var(--bg-color);
+  background-color: var(--bg-hover);
   display: flex;
   flex-direction: column;
 }
 
-.shared-card {
+.landing-nav {
+  padding: 24px 0;
+}
+
+.shared-premium-card {
+  max-width: 900px;
   width: 100%;
-  max-width: 600px;
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  padding: 40px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
-.shared-card-preview {
-  height: 300px;
+.premium-icon-box {
+  width: 72px;
+  height: 72px;
+  background-color: var(--bg-hover);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--border-color);
+}
+
+.premium-divider {
+  height: 1px;
   width: 100%;
-  background-color: rgba(0,0,0,0.02);
-  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(90deg, transparent, var(--border-color) 15%, var(--border-color) 85%, transparent);
 }
 
-.shared-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.premium-description-box {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #374151;
+  white-space: pre-wrap;
 }
 
-.shared-pdf {
-  width: 100%;
-  height: 100%;
-}
-
-.shared-card-content {
-  padding: 32px;
-  text-align: center;
-}
-
-.shared-filename {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.text-main {
-  color: var(--text-main);
-  text-decoration: none;
-}
-.text-main:hover {
-  text-decoration: none;
+@media (max-width: 768px) {
+  .shared-premium-card {
+    padding: 24px;
+    margin: 0 16px;
+  }
+  
+  .premium-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .premium-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .premium-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
