@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth, db } from '../firebase/config';
+import { auth, db, googleProvider } from '../firebase/config';
 import { 
   onAuthStateChanged, 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signOut,
-  updateProfile
+  updateProfile,
+  signInWithPopup
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
@@ -38,6 +39,24 @@ export function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   }
 
+  async function signInWithGoogle() {
+    const userCredential = await signInWithPopup(auth, googleProvider);
+    const userRef = doc(db, "users", userCredential.user.uid);
+    const docSnap = await getDoc(userRef);
+
+    if (!docSnap.exists()) {
+      // Create user document for new Google users
+      await setDoc(userRef, {
+        email: userCredential.user.email,
+        displayName: userCredential.user.displayName,
+        createdAt: new Date().toISOString(),
+        storageUsed: 0
+      });
+    }
+
+    return userCredential;
+  }
+
   function logout() {
     return signOut(auth);
   }
@@ -55,6 +74,7 @@ export function AuthProvider({ children }) {
     currentUser,
     signup,
     login,
+    signInWithGoogle,
     logout
   };
 

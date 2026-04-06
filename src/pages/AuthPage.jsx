@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Cloud, ArrowLeft } from 'lucide-react';
+import { Cloud, ArrowLeft, Globe } from 'lucide-react';
 import toast from 'react-hot-toast';
 import './AuthPage.css';
 
 function AuthPage({ type }) {
   const isLogin = type === 'login';
-  const { login, signup } = useAuth();
+  const { login, signup, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -44,6 +44,19 @@ function AuthPage({ type }) {
       navigate('/dashboard');
     } catch (error) {
       toast.error(error.message || "Failed to authenticate");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setLoading(true);
+      await signInWithGoogle();
+      toast.success("Signed in with Google!");
+      navigate('/dashboard');
+    } catch (error) {
+      toast.error(error.message || "Failed to sign in with Google");
     } finally {
       setLoading(false);
     }
@@ -116,6 +129,19 @@ function AuthPage({ type }) {
             {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Sign Up')}
           </button>
         </form>
+
+        <div className="auth-divider">
+          <span>OR</span>
+        </div>
+
+        <button 
+          onClick={handleGoogleSignIn} 
+          className="btn btn-secondary w-full flex items-center justify-center gap-2"
+          disabled={loading}
+        >
+          <Globe size={20} />
+          Sign in with Google
+        </button>
 
         <div className="auth-footer text-center mt-8">
           {isLogin ? (
