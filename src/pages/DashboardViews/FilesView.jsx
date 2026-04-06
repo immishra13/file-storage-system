@@ -3,12 +3,17 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { useAuth } from '../../contexts/AuthContext';
 import FileCard from '../../components/FileCard';
+import EditFileModal from '../../components/EditFileModal';
+import FileDetailsModal from '../../components/FileDetailsModal';
 import { Loader2 } from 'lucide-react';
 
 function FilesView({ inFolder }) {
   const { currentUser } = useAuth();
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  const [editingFile, setEditingFile] = useState(null);
+  const [viewingFile, setViewingFile] = useState(null);
 
   const fetchFiles = async () => {
     if (!currentUser) return;
@@ -58,9 +63,30 @@ function FilesView({ inFolder }) {
       ) : (
         <div className="files-grid">
           {files.map(file => (
-            <FileCard key={file.id} file={file} onUpdate={fetchFiles} />
+            <FileCard 
+              key={file.id} 
+              file={file} 
+              onUpdate={fetchFiles}
+              onEdit={(fileToEdit) => setEditingFile(fileToEdit)}
+              onViewDetails={(fileToView) => setViewingFile(fileToView)}
+            />
           ))}
         </div>
+      )}
+
+      {editingFile && (
+        <EditFileModal 
+          file={editingFile} 
+          onClose={() => setEditingFile(null)} 
+          onSuccess={fetchFiles} 
+        />
+      )}
+
+      {viewingFile && (
+        <FileDetailsModal 
+          file={viewingFile} 
+          onClose={() => setViewingFile(null)} 
+        />
       )}
     </div>
   );

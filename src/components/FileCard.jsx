@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { FileText, Image as ImageIcon, File as FileIcon, MoreVertical, Download, Trash2, Share2, Video, Music, Archive } from 'lucide-react';
+import { FileText, Image as ImageIcon, File as FileIcon, MoreVertical, Download, Trash2, Share2, Video, Music, Archive, Info, Pencil } from 'lucide-react';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import toast from 'react-hot-toast';
 import './CardStyles.css';
 
-function FileCard({ file, onUpdate }) {
+function FileCard({ file, onUpdate, onEdit, onViewDetails }) {
   const [showMenu, setShowMenu] = useState(false);
 
-  // Pick icon based on category
   const getIcon = () => {
     switch (file.category) {
       case 'Image': return <ImageIcon size={32} color="#0066cc" />;
@@ -34,7 +33,6 @@ function FileCard({ file, onUpdate }) {
 
   const handleDelete = async () => {
     try {
-      // Delete document only since external files sit on external servers
       await deleteDoc(doc(db, "files", file.id));
       toast.success('File link deleted');
       if(onUpdate) onUpdate();
@@ -77,7 +75,9 @@ function FileCard({ file, onUpdate }) {
 
         {showMenu && (
           <div className="context-menu animate-fade-in">
+            <button onMouseDown={() => { onViewDetails(file); setShowMenu(false); }}><Info size={14} /> View Info</button>
             <button onMouseDown={handleDownload}><Download size={14} /> Open Link</button>
+            <button onMouseDown={() => { onEdit(file); setShowMenu(false); }}><Pencil size={14} /> Edit</button>
             <button onMouseDown={handleShare}><Share2 size={14} /> Share View Link</button>
             <button onMouseDown={handleDelete} className="text-danger"><Trash2 size={14} /> Delete</button>
           </div>
