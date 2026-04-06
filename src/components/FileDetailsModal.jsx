@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ExternalLink, Calendar, Tag, FileText, Image as ImageIcon, File as FileIcon, Video, Music, Archive } from 'lucide-react';
+import { X, ExternalLink, Calendar, Tag, FileText, Image as ImageIcon, File as FileIcon, Video, Music, Archive, Github } from 'lucide-react';
 
 function FileDetailsModal({ file, onClose }) {
   if (!file) return null;
@@ -30,9 +30,16 @@ function FileDetailsModal({ file, onClose }) {
             {getIcon()}
             <div style={{ flex: 1, minWidth: 0 }}>
               <h3 className="font-bold text-main" style={{ wordBreak: 'break-word' }}>{file.fileName}</h3>
-              <a href={file.fileURL} target="_blank" rel="noopener noreferrer" className="text-primary text-sm flex items-center gap-1 hover:underline" style={{ marginTop: '4px' }}>
-                <ExternalLink size={14} /> Open Link
-              </a>
+              <div className="flex gap-4 mt-1">
+                <a href={file.fileURL} target="_blank" rel="noopener noreferrer" className="text-primary text-sm flex items-center gap-1 hover:underline">
+                  <ExternalLink size={14} /> Open Link
+                </a>
+                {file.githubLink && (
+                  <a href={file.githubLink} target="_blank" rel="noopener noreferrer" className="text-muted text-sm flex items-center gap-1 hover:underline">
+                    <Github size={14} /> View GitHub
+                  </a>
+                )}
+              </div>
             </div>
           </div>
 

@@ -9,7 +9,8 @@ function EditFileModal({ file, onClose, onSuccess }) {
     fileName: file.fileName || '',
     description: file.description || '',
     category: file.category || 'Document',
-    fileURL: file.fileURL || ''
+    fileURL: file.fileURL || '',
+    githubLink: file.githubLink || ''
   });
   const [uploading, setUploading] = useState(false);
 
@@ -39,6 +40,7 @@ function EditFileModal({ file, onClose, onSuccess }) {
         description: formData.description,
         category: formData.category,
         fileURL: formData.fileURL,
+        githubLink: formData.githubLink,
       });
 
       toast.success('File link updated successfully!');
@@ -91,6 +93,19 @@ function EditFileModal({ file, onClose, onSuccess }) {
                 className="input-field" 
                 placeholder="https://drive.google.com/..."
                 value={formData.fileURL}
+                onChange={handleChange}
+                disabled={uploading}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">GitHub URL (Optional)</label>
+              <input 
+                type="url" 
+                name="githubLink"
+                className="input-field" 
+                placeholder="https://github.com/..."
+                value={formData.githubLink}
                 onChange={handleChange}
                 disabled={uploading}
               />

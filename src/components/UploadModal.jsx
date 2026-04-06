@@ -13,7 +13,8 @@ function UploadModal({ onClose }) {
     fileName: '',
     description: '',
     category: 'Document',
-    fileURL: ''
+    fileURL: '',
+    githubLink: ''
   });
   const [uploading, setUploading] = useState(false);
 
@@ -46,6 +47,7 @@ function UploadModal({ onClose }) {
         description: formData.description,
         category: formData.category,
         fileURL: formData.fileURL,
+        githubLink: formData.githubLink,
         uploadDate: new Date().toISOString(),
         uploadedBy: currentUser.uid,
       });
@@ -99,6 +101,19 @@ function UploadModal({ onClose }) {
                 className="input-field" 
                 placeholder="https://drive.google.com/..."
                 value={formData.fileURL}
+                onChange={handleChange}
+                disabled={uploading}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">GitHub URL (Optional)</label>
+              <input 
+                type="url" 
+                name="githubLink"
+                className="input-field" 
+                placeholder="https://github.com/..."
+                value={formData.githubLink}
                 onChange={handleChange}
                 disabled={uploading}
               />

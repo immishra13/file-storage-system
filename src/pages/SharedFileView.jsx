@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { Cloud, ExternalLink, File as FileIcon, Image as ImageIcon, FileText, Video, Music, Archive, Loader2 } from 'lucide-react';
+import { Cloud, ExternalLink, File as FileIcon, Image as ImageIcon, FileText, Video, Music, Archive, Loader2, Github } from 'lucide-react';
 import './SharedFileView.css';
 
 function SharedFileView() {
@@ -35,12 +35,12 @@ function SharedFileView() {
 
   const getIcon = () => {
     switch (file.category) {
-      case 'Image': return <ImageIcon size={64} color="#0066cc" />;
-      case 'Document': return <FileText size={64} color="#ff3b30" />;
-      case 'Video': return <Video size={64} color="#9c27b0" />;
-      case 'Audio': return <Music size={64} color="#ff9800" />;
-      case 'Archive': return <Archive size={64} color="#795548" />;
-      default: return <FileIcon size={64} color="#86868b" />;
+      case 'Image': return <ImageIcon size={48} color="#0066cc" />;
+      case 'Document': return <FileText size={48} color="#ff3b30" />;
+      case 'Video': return <Video size={48} color="#9c27b0" />;
+      case 'Audio': return <Music size={48} color="#ff9800" />;
+      case 'Archive': return <Archive size={48} color="#795548" />;
+      default: return <FileIcon size={48} color="#86868b" />;
     }
   };
 
@@ -73,30 +73,64 @@ function SharedFileView() {
         </Link>
       </nav>
 
-      <main className="shared-main container flex justify-center items-center mt-12">
-        <div className="card shared-card">
-          <div className="shared-card-preview bg-gray-50 flex items-center justify-center py-12">
+      <main className="shared-main container flex justify-center items-center mt-12 pb-12">
+        <div className="card shared-card" style={{ maxWidth: '600px', width: '100%', padding: '0' }}>
+          
+          <div className="p-8 flex items-center gap-4 bg-gray-50 border-b border-gray-100 rounded-t-xl">
             {getIcon()}
+            <div>
+              <h1 className="text-2xl font-bold text-main" style={{ wordBreak: 'break-word', lineHeight: 1.2 }}>
+                {file.fileName}
+              </h1>
+              <p className="text-muted text-sm mt-1">
+                Category: {file.category} • Added: {new Date(file.uploadDate).toLocaleDateString()}
+              </p>
+            </div>
           </div>
           
-          <div className="shared-card-content">
-            <h3 className="shared-filename truncate" title={file.fileName}>{file.fileName}</h3>
-            {file.description && (
-              <p className="text-muted mb-4 text-sm">{file.description}</p>
+          <div className="p-8">
+            {file.description ? (
+              <div 
+                className="description-box mb-8 text-main"
+                style={{
+                  whiteSpace: 'pre-wrap', 
+                  lineHeight: '1.6', 
+                  fontSize: '15px',
+                  backgroundColor: '#f9fafb',
+                  padding: '20px',
+                  borderRadius: '12px',
+                  border: '1px solid #f3f4f6'
+                }}
+              >
+                {file.description}
+              </div>
+            ) : (
+              <p className="italic text-gray-400 mb-8 text-center">No description provided for this link.</p>
             )}
-            <p className="shared-meta text-muted mb-6">
-              Category: {file.category} • Added: {new Date(file.uploadDate).toLocaleDateString()}
-            </p>
             
-            <a 
-              href={file.fileURL} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="btn btn-primary w-full justify-center btn-large"
-            >
-              <ExternalLink size={20} /> Open External Link
-            </a>
+            <div className="flex flex-col gap-3">
+              <a 
+                href={file.fileURL} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn btn-primary w-full justify-center btn-large"
+              >
+                <ExternalLink size={20} /> Open External Link
+              </a>
+              
+              {file.githubLink && (
+                <a 
+                  href={file.githubLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="btn btn-outline w-full justify-center btn-large"
+                >
+                  <Github size={20} /> View on GitHub
+                </a>
+              )}
+            </div>
           </div>
+          
         </div>
       </main>
     </div>
