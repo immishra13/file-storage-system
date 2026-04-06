@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ExternalLink, Calendar, Tag, FileText, Image as ImageIcon, File as FileIcon, Video, Music, Archive, Github } from 'lucide-react';
+import { X, ExternalLink, Calendar, Tag, FileText, Image as ImageIcon, File as FileIcon, Video, Music, Archive, Code } from 'lucide-react';
 
 function FileDetailsModal({ file, onClose }) {
   if (!file) return null;
@@ -36,7 +36,7 @@ function FileDetailsModal({ file, onClose }) {
                 </a>
                 {file.githubLink && (
                   <a href={file.githubLink} target="_blank" rel="noopener noreferrer" className="text-muted text-sm flex items-center gap-1 hover:underline">
-                    <Github size={14} /> View GitHub
+                    <Code size={14} /> View GitHub
                   </a>
                 )}
               </div>

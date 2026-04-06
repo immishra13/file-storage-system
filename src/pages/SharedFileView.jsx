@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { Cloud, ExternalLink, File as FileIcon, Image as ImageIcon, FileText, Video, Music, Archive, Loader2, Github } from 'lucide-react';
+import { Cloud, ExternalLink, File as FileIcon, Image as ImageIcon, FileText, Video, Music, Archive, Loader2, Code } from 'lucide-react';
 import './SharedFileView.css';
 
 function SharedFileView() {
@@ -123,9 +123,9 @@ function SharedFileView() {
                   href={file.githubLink} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="btn btn-outline w-full justify-center btn-large"
+                  className="btn btn-outline w-full justify-center btn-large flex items-center gap-2"
                 >
-                  <Github size={20} /> View on GitHub
+                  <Code size={20} /> View on GitHub
                 </a>
               )}
             </div>
