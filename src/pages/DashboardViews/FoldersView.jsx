@@ -82,6 +82,7 @@ function FoldersView() {
           <input 
             type="text" 
             className="input-field flex-1" 
+            aria-label="Folder name"
             placeholder="Folder Name"
             autoFocus
             value={newFolderName}

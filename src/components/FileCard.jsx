@@ -69,6 +69,9 @@ function FileCard({ file, onUpdate, onEdit, onViewDetails }) {
           onClick={() => setShowMenu(!showMenu)}
           onBlur={() => setTimeout(() => setShowMenu(false), 200)}
           title="More options"
+          aria-label="More options"
+          aria-haspopup="menu"
+          aria-expanded={showMenu}
         >
           <MoreVertical size={16} />
         </button>
