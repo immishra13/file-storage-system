@@ -10,7 +10,7 @@ function Navbar({ toggleSidebar }) {
     <>
       <header className="top-navbar">
         <div className="flex items-center gap-4">
-          <button className="mobile-menu-btn" onClick={toggleSidebar}>
+          <button className="mobile-menu-btn" onClick={toggleSidebar} aria-label="Open menu">
             <Menu size={24} color="var(--text-main)" />
           </button>
           
@@ -21,7 +21,7 @@ function Navbar({ toggleSidebar }) {
           {/* Search Bar - Stylized */}
           <div className="search-bar">
             <Search size={18} color="var(--text-muted)" />
-            <input type="text" placeholder="Search files..." />
+            <input type="text" placeholder="Search files..." aria-label="Search files" />
           </div>
 
           <button 

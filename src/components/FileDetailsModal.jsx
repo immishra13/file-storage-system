@@ -20,7 +20,7 @@ function FileDetailsModal({ file, onClose }) {
       <div className="modal-card animate-fade-in card" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
           <h3>File Details</h3>
-          <button onClick={onClose} className="btn-icon-only">
+          <button onClick={onClose} className="btn-icon-only" aria-label="Close">
             <X size={20} />
           </button>
         </div>

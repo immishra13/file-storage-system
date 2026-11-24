@@ -67,7 +67,7 @@ function UploadModal({ onClose }) {
       <div className="modal-card animate-fade-in card">
         <div className="modal-header">
           <h3>Add File Link</h3>
-          <button onClick={onClose} className="btn-icon-only" disabled={uploading}>
+          <button onClick={onClose} className="btn-icon-only" disabled={uploading} aria-label="Close">
             <X size={20} />
           </button>
         </div>
